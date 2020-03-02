@@ -14,7 +14,10 @@
 ##   You should have received a copy of the GNU General Public License
 ##   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-CC := mpicc
+ifndef MPICC
+MPICC := mpicc
+endif
+
 CFLAGS := 
 
 .PHONY: all install uninstall clean
@@ -22,7 +25,7 @@ CFLAGS :=
 all: testmpi
 
 testmpi: testmpi.c
-	$(CC) $(CFLAGS) $< -o $@
+	$(MPICC) $(CFLAGS) $< -o $@
 
 install: testmpi
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
