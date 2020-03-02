@@ -7,5 +7,6 @@ to be in your path, change it in the makefile if you need to.
 Example usage:
 ```bash
 make
+sudo make install # optional
 mpirun -np 7 testmpi
 ```

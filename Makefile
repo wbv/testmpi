@@ -17,12 +17,19 @@
 CC := mpicc
 CFLAGS := 
 
-.PHONY: all clean
+.PHONY: all install uninstall clean
 
 all: testmpi
 
 testmpi: testmpi.c
 	$(CC) $(CFLAGS) $< -o $@
+
+install: testmpi
+	mkdir -p $(DESTDIR)$(PREFIX)/bin
+	cp $< $(DESTDIR)$(PREFIX)/bin/testmpi
+
+uninstall:
+	rm -f $(DESTDIR)$(PREFIX)/bin/testmpi
 
 clean:
 	rm -f testmpi
