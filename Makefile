@@ -14,16 +14,16 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-ifndef MPICC
-MPICC := mpicc
-endif
-
 .PHONY: all install uninstall clean
 
 all: testmpi
 
 testmpi: testmpi.c
-	$(MPICC) $(CFLAGS) $< -o $@
+ifndef MPIFLAGS
+	mpicc $(CFLAGS) $< -o $@
+else
+	$(CC) $(MPIFLAGS) $< -o $@
+endif
 
 install: testmpi
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
