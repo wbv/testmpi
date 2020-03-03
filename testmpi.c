@@ -14,7 +14,6 @@
 //    You should have received a copy of the GNU General Public License
 //    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-#include <config.h>
 #include <stdio.h>
 #include <mpi.h>
 
@@ -44,9 +43,6 @@ int main(int argc, char** argv)
 	// returning it back to node 0
 	if (rank == 0)
 	{
-		// print autotools package information
-		puts(PACKAGE_STRING);
-
 		// root node sends data first
 		printf("%6d/%d: Sending %d...\n", rank+1, size, data);
 		MPI_Send(&data, 1, MPI_INT, dst, 0, MPI_COMM_WORLD);
