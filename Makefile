@@ -18,12 +18,26 @@
 
 all: testmpi
 
-testmpi: testmpi.c
-ifndef MPIFLAGS
-	mpicc $(CFLAGS) $< -o $@
-else
-	$(CC) $(MPIFLAGS) $< -o $@
+
+# if you're compiling the program in a weird environment, you'll probably want
+# to manually specify the C compiler (MPICC), compile flags (MPICFLAGS), and
+# linker flags (MPILFLAGS) manually when invoking the makefile. Otherwise,
+# defaults get set below:
+ifndef MPICC
+MPICC=$(shell which cc)
 endif
+
+ifndef MPICFLAGS
+MPICFLAGS=$(shell mpicc -showme:compile)
+endif
+
+ifndef MPILFLAGS
+MPILFLAGS=$(shell mpicc -showme:link)
+endif
+
+
+testmpi: testmpi.c
+	$(MPICC) $(MPICFLAGS) $< $(MPILFLAGS) -o $@
 
 install: testmpi
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
